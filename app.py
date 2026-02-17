@@ -13,11 +13,11 @@ load_dotenv()
 app = Flask(__name__)
 
 # Секретный ключ лучше хранить в переменной окружения
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.dirname(__file__), 'rgz.db')
 
 # Подключение к PostgreSQL через переменную окружения DATABASE_URL
 # Если переменная не задана, используется строка по умолчанию (замените на свои данные)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://myuser:mypassword@localhost/rgz_db')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://myuser:mypassword@localhost/rgz_db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -117,8 +117,6 @@ def rgz_api():
     print("API вызван!")  # отладка
     data = request.get_json()
     print("Получены данные:", data)
-    # остальной код...      
-    data = request.get_json()
     
     # Проверка наличия обязательных полей
     if not data or not isinstance(data, dict):
