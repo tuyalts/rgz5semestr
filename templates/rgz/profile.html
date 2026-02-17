@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block lab %}Мой профиль{% endblock %}
+{% block head %}
+    <script src="{{ url_for('static', filename='js/rgz.js') }}"></script>
+    <style>
+        .profile-view, .profile-edit { margin: 20px 0; }
+        label { display: inline-block; width: 100px; }
+    </style>
+{% endblock %}
+{% block main %}
+    <h1>Мой профиль</h1>
+    <div id="profile-view" class="profile-view">
+        <p><strong>Логин:</strong> <span id="profile-username"></span></p>
+        <p><strong>Имя:</strong> <span id="profile-name"></span></p>
+        <p><strong>Услуга:</strong> <span id="profile-service"></span></p>
+        <p><strong>Стаж:</strong> <span id="profile-experience"></span> лет</p>
+        <p><strong>Цена:</strong> <span id="profile-price"></span> руб.</p>
+        <p><strong>О себе:</strong> <span id="profile-about"></span></p>
+        <p>
+            <label>Скрыть анкету:</label>
+            <input type="checkbox" id="profile-hidden" onchange="toggleHide(this)">
+        </p>
+        <button onclick="showEditForm()">Редактировать</button>
+        <button onclick="deleteAccount()" style="background:red;">Удалить аккаунт</button>
+    </div>
+
+    <div id="profile-edit" class="profile-edit" style="display:none;">
+        <h2>Редактирование</h2>
+        <form onsubmit="event.preventDefault(); updateProfile();">
+            <div>
+                <label>Имя:</label>
+                <input type="text" id="edit-name" required>
+            </div>
+            <div>
+                <label>Услуга:</label>
+                <select id="edit-service" required>
+                    <option>Репетитор</option>
+                    <option>Бухгалтер</option>
+                    <option>Программист</option>
+                    <option>Юрист</option>
+                    <option>Врач</option>
+                    <option>Дизайнер</option>
+                    <option>Переводчик</option>
+                    <option>Строитель</option>
+                </select>
+            </div>
+            <div>
+                <label>Стаж:</label>
+                <input type="number" id="edit-experience" required>
+            </div>
+            <div>
+                <label>Цена:</label>
+                <input type="number" id="edit-price" required>
+            </div>
+            <div>
+                <label>О себе:</label>
+                <textarea id="edit-about"></textarea>
+            </div>
+            <button type="submit">Сохранить</button>
+            <button type="button" onclick="hideEditForm()">Отмена</button>
+        </form>
+    </div>
+
+    <script>
+        function showEditForm() {
+            // Заполнить поля текущими данными
+            document.getElementById('edit-name').value = document.getElementById('profile-name').innerText;
+            document.getElementById('edit-service').value = document.getElementById('profile-service').innerText;
+            document.getElementById('edit-experience').value = document.getElementById('profile-experience').innerText;
+            document.getElementById('edit-price').value = document.getElementById('profile-price').innerText;
+            document.getElementById('edit-about').value = document.getElementById('profile-about').innerText;
+            document.getElementById('profile-view').style.display = 'none';
+            document.getElementById('profile-edit').style.display = 'block';
+        }
+        function hideEditForm() {
+            document.getElementById('profile-view').style.display = 'block';
+            document.getElementById('profile-edit').style.display = 'none';
+        }
+        window.onload = loadMyProfile;
+    </script>
+{% endblock %}

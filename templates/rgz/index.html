@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block lab %}Поиск профессионалов{% endblock %}
+{% block head %}
+    <script src="{{ url_for('static', filename='js/rgz.js') }}"></script>
+    <style>
+        .search-form { margin-bottom: 20px; }
+        .user-card { border: 1px solid #ccc; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .pagination { margin-top: 20px; }
+    </style>
+{% endblock %}
+{% block main %}
+    <h1>Поиск специалистов</h1>
+    <div class="search-form">
+        <input type="text" id="search-name" placeholder="Имя">
+        <select id="search-service">
+            <option value="">Все услуги</option>
+            <option>Репетитор</option>
+            <option>Бухгалтер</option>
+            <option>Программист</option>
+            <option>Юрист</option>
+            <option>Врач</option>
+            <option>Дизайнер</option>
+            <option>Переводчик</option>
+            <option>Строитель</option>
+        </select>
+        <input type="number" id="search-exp-min" placeholder="Стаж от">
+        <input type="number" id="search-exp-max" placeholder="Стаж до">
+        <input type="number" id="search-price-min" placeholder="Цена от">
+        <input type="number" id="search-price-max" placeholder="Цена до">
+        <button onclick="search(1)">Искать</button>
+    </div>
+    <div id="search-results"></div>
+    <div id="pagination" class="pagination"></div>
+
+    <script>
+        // При загрузке страницы можно выполнить пустой поиск
+        window.onload = function() {
+            search(1);
+        };
+    </script>
+{% endblock %}

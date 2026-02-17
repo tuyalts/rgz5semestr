@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block lab %}Вход{% endblock %}
+{% block head %}
+    <script src="{{ url_for('static', filename='js/rgz.js') }}"></script>
+{% endblock %}
+{% block main %}
+    <h1>Вход</h1>
+    <form onsubmit="event.preventDefault(); loginUser(document.getElementById('username').value, document.getElementById('password').value);">
+        <div>
+            <label>Логин:</label>
+            <input type="text" id="username" required>
+        </div>
+        <div>
+            <label>Пароль:</label>
+            <input type="password" id="password" required>
+        </div>
+        <button type="submit">Войти</button>
+    </form>
+    <p>Нет аккаунта? <a href="{{ url_for('rgz_register_page') }}">Зарегистрироваться</a></p>
+{% endblock %}

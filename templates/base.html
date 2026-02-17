@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block lab %}Профессионалы{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/rgz.js') }}"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="{{ url_for('rgz_index') }}" style="text-decoration: none; color: inherit;">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Логотип">
+                Профессионалы
+            </a>
+        </div>
+        <div class="auth-buttons">
+            {% if current_user.is_authenticated %}
+                <span class="welcome">Привет, {{ current_user.name }}!</span>
+                <a href="{{ url_for('rgz_profile_page') }}" class="auth-button">Мой профиль</a>
+                {% if current_user.is_admin %}
+                    <a href="{{ url_for('rgz_admin_page') }}" class="auth-button">Админка</a>
+                {% endif %}
+                <a href="#" onclick="logoutUser()" class="auth-button">Выход</a>
+            {% else %}
+                <a href="{{ url_for('rgz_login_page') }}" class="auth-button">Вход</a>
+                <a href="{{ url_for('rgz_register_page') }}" class="auth-button">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+    
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+    
+    <footer>
+        <p>&copy; Ломбоцыренова Туяна Владимировна, ФБИ-33</p>
+    </footer>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>
